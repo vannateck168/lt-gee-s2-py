@@ -56,20 +56,6 @@ from datetime import date
 # Initialize access to Google's EE servers
 ee.Initialize("my_project_name")
 
-# Initialize variables for LandTrendr algorithm
-composite_params = {
-    "start_date": date(2020, 1,1),
-    "end_date": date(2025, 1,1),
-    "area_of_interest": ee.Geometry({
-        'type': 'Polygon',
-        'coordinates': [
-            [
-            [105.23383507567384, 12.788253594979945],
-            [105.99738488036134, 12.788253594979945],
-            [105.99738488036134, 13.627858054119361],
-            [105.23383507567384, 13.627858054119361],
-            [105.23383507567384, 12.788253594979945]
-            ]
 # Example arguments to pass to the LandTrendr class. See docstring of LandTrendr for more information'
 composite_params = {
     "start_date": date(2018, 1, 1),  # Changed to date object
