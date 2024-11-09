@@ -5,7 +5,7 @@ Python interface to the Google Earth Engine implementation of the LandTrendr spe
 
 **LandTrendr** is set of spectral-temporal segmentation algorithms that are useful for change detection in a time series of moderate resolution satellite imagery (primarily Landsat) and for generating trajectory-based spectral time series data largely absent of inter-annual signal noise. LT was originally implemented in IDL (Interactive Data Language), but with the help of engineers at Google, it has been ported to the GEE platform.
 
-The **LandTrendr** class from **lt-gee-s2-py** is a light wrapper around the Google Earth Engine API that includes convenience methods to generate images and collections in the format required for LandTrendr on GEE. Please be aware this package is in alpha and may change.
+The **LandTrendr** class from **lt-gee-py** is a light wrapper around the Google Earth Engine API that includes convenience methods to generate images and collections in the format required for LandTrendr on GEE. Please be aware this package is in alpha and may change.
 
 ## Getting Started
 
