@@ -1,5 +1,5 @@
-# lt-gee-py
-Python interface to the Google Earth Engine implementation of the LandTrendr spectral-temporal segmentation algorithm.
+# lt-gee-s2-py
+Python interface to the Google Earth Engine implementation of the LandTrendr spectral-temporal segmentation algorithm. The LandTrendr spectral-temporal segmentation algorithm is being adapted for use with Sentinel-2
 
 ## Introduction
 
@@ -14,15 +14,30 @@ The **LandTrendr** class from **lt-gee-py** is a light wrapper around the Google
 - Install the Python API for Google Earth Engine. This is the only dependency thus far.
 
 ```
-conda install -c conda-forge earthengine-api
+!pip install earthengine-api
 ```
 
-- Install lt-gee-py package using the pip command.
+- git clone.
 
 ```
-pip install lt-gee-py
+!git clone https://github.com/vannateck168/lt-gee-s2-py.git
 ```
-
+- Navigate to the directory.
+  
+```
+%cd /content/lt-gee-s2-py
+```
+- Install the package.
+  
+```
+!pip install .
+```
+- Initialize Earth Engine.
+  
+```
+!import geemap
+!import ee
+```
 ### Authenticate on Google Earth Engine
 
 - [Earth Engine Authentication and Initialization](https://developers.google.com/earth-engine/guides/auth)
@@ -34,40 +49,37 @@ earthengine authenticate # There are several alternatives for this. See link abo
 ## Basic Usage
 
 ```python
-import ee
-from ltgee import LandTrendr, LandsatComposite, LtCollection
+from ltgee import LandTrendr, LtCollection
+from ltgee import Sentinel2Composite  # Import Sentinel2Composite directly from ltgee
+from datetime import date
 
 # Initialize access to Google's EE servers
 ee.Initialize("my_project_name")
 
 # Initialize variables for LandTrendr algorithm
 composite_params = {
-    "start_date": date(1985, 6,1),
-    "end_date": date(2017, 9,1),
+    "start_date": date(2020, 1,1),
+    "end_date": date(2025, 1,1),
     "area_of_interest": ee.Geometry({
         'type': 'Polygon',
         'coordinates': [
             [
-                [-122.37202331327023,44.62585686599272],
-                [-122.26765319608273,44.62585686599272],
-                [-122.26765319608273,44.696185837887384],
-                [-122.37202331327023,44.696185837887384],
-                [-122.37202331327023,44.62585686599272],
-                ]
-            ]
-    }),
-    "mask_labels": ['cloud', 'shadow', 'snow', 'water'],
-    "debug": True
+            [105.23383507567384, 12.788253594979945],
+            [105.99738488036134, 12.788253594979945],
+            [105.99738488036134, 13.627858054119361],
+            [105.23383507567384, 13.627858054119361],
+            [105.23383507567384, 12.788253594979945]
+       ]
+    ])
 }
 lt_collection_params = {
-        "sr_collection": LandsatComposite(**composite_params),
-        # "sr_collection": composite_params, # - you may also just pass in your own collection or the params directly. Note: in the former, some methods in the class may not work.
+        "sr_collection": Sentinel2Composite(**composite_params),
         "index": 'NBR',
         "ftv_list": ['TCB', 'TCG', 'TCW', 'NBR'],
 }
 lt_params = {
     "lt_collection": LtCollection(**lt_collection_params),
-    # "lt_collection": lt_collection_params, # - you may also just pass in your own collection or the params directly. Note: in the former, some methods in the class may not work.
+    # "lt_collection": lt_collection_params, # - you may also just pass in your own collection or the params directly
     "run_params": {
             "maxSegments": 6,
             "spikeThreshold": 0.9,
@@ -79,7 +91,6 @@ lt_params = {
             "minObservationsNeeded": 6,
         }
 }
-
 # Instantiating LandTrendr object. Note: The object will immediately request to run the algorithm on Google's servers.
 lt = LandTrendr(**lt_params)
 
