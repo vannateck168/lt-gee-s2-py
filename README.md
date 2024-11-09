@@ -70,19 +70,28 @@ composite_params = {
             [105.23383507567384, 13.627858054119361],
             [105.23383507567384, 12.788253594979945]
             ]
-    }),
-    "mask_labels": ['cloud', 'shadow', 'snow', 'water'],
-    "debug": True
+# Example arguments to pass to the LandTrendr class. See docstring of LandTrendr for more information'
+composite_params = {
+    "start_date": date(2018, 1, 1),  # Changed to date object
+    "end_date": date(2024, 12, 31),    # Changed to date object
+    "area_of_interest": ee.Geometry.Polygon([
+        [
+            [105.23383507567384, 12.788253594979945],
+            [105.99738488036134, 12.788253594979945],
+            [105.99738488036134, 13.627858054119361],
+            [105.23383507567384, 13.627858054119361],
+            [105.23383507567384, 12.788253594979945]
+        ]
+    ])
 }
 lt_collection_params = {
-        "sr_collection": LandsatComposite(**composite_params),
-        # "sr_collection": composite_params, # - you may also just pass in your own collection or the params directly. Note: in the former, some methods in the class may not work.
+        "sr_collection": Sentinel2Composite(**composite_params),
         "index": 'NBR',
         "ftv_list": ['TCB', 'TCG', 'TCW', 'NBR'],
 }
 lt_params = {
     "lt_collection": LtCollection(**lt_collection_params),
-    # "lt_collection": lt_collection_params, # - you may also just pass in your own collection or the params directly. Note: in the former, some methods in the class may not work.
+    # "lt_collection": lt_collection_params, # - you may also just pass in your own collection or the params directly
     "run_params": {
             "maxSegments": 6,
             "spikeThreshold": 0.9,
