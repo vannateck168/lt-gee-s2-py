@@ -43,8 +43,8 @@ def forest_mask(aoi: ee.Geometry) -> ee.Image:
     ee.Image: The forest mask image clipped to the AOI.
     """
     forest_image = ee.Image("projects/servir-mekong/UMD/TCC_C02/2023").gt(10)
-    img_for = for_col.toBands()
-    forest_image = img_for.select('b1')
+    # img_for = for_col.toBands()
+    # forest_image = img_for.select('b1')
     selected_forests = forest_image.expression(
         'Band >= 1 ? 1 : 0', {
             'Band': forest_image
