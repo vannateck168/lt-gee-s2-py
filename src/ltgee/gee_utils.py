@@ -42,11 +42,11 @@ def forest_mask(aoi: ee.Geometry) -> ee.Image:
     Returns:
     ee.Image: The forest mask image clipped to the AOI.
     """
-    for_col = ee.ImageCollection("COPERNICUS/Landcover/100m/Proba-V/Global")
-    img_for = for_col.toBands()
-    forest_image = img_for.select('2015_forest_type')
+    forest_image = ee.Image("users/vannaneang7/sevir_landcover_2023_v1")
+    # img_for = for_col.toBands()
+    # forest_image = img_for.select('2015_forest_type')
     selected_forests = forest_image.expression(
-        'Band >= 0 ? 1 : 0', {
+        'Band >= 8 ? 1 : 0', {
             'Band': forest_image
         }
     )
