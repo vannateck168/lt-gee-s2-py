@@ -63,7 +63,7 @@ def water_mask(aoi: ee.Geometry) -> ee.Image:
     Returns:
     ee.Image: The water mask applied to the given area of interest.
     """
-    mapped_water = ee.Image("JRC/GSW1_1/GlobalSurfaceWater")
+    mapped_water = ee.Image("JRC/GSW1_4/GlobalSurfaceWater")
     mapped_water_binary = mapped_water.expression(
         'band > 99 ? 0 : 1', {
             'band': mapped_water.select('recurrence')
