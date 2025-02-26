@@ -171,7 +171,7 @@ class Sentinel2Composite(ee.ImageCollection):
         """
         Adds shadow bands to the image to mask cloud shadows.
         """
-        not_water = image.select('SCL').neq(6)
+        not_water = image.select('QA60').neq(6)
         dark_pixels = image.select('B8').lt(self.nir_drk_thresh * self._sr_band_scale).multiply(not_water).rename('dark_pixels')
 
         shadow_azimuth = ee.Number(90).subtract(ee.Number(image.get('MEAN_SOLAR_AZIMUTH_ANGLE')))
